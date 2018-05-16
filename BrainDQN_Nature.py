@@ -46,9 +46,9 @@ class BrainDQN:
 		checkpoint = tf.train.get_checkpoint_state("./savedweights")
 		if checkpoint and checkpoint.model_checkpoint_path:
 				self.saver.restore(self.session, checkpoint.model_checkpoint_path)
-				print "Successfully loaded:", checkpoint.model_checkpoint_path
+				print("Successfully loaded:", checkpoint.model_checkpoint_path)
 		else:
-				print "Could not find old network weights"
+				print("Could not find old network weights")
 
 
 	def createQNetwork(self):
@@ -80,7 +80,7 @@ class BrainDQN:
 
 		h_conv3 = tf.nn.relu(self.conv2d(h_conv2,W_conv3,1) + b_conv3)
 		h_conv3_shape = h_conv3.get_shape().as_list()
-		print "dimension:",h_conv3_shape[1]*h_conv3_shape[2]*h_conv3_shape[3]
+		print("dimension:",h_conv3_shape[1]*h_conv3_shape[2]*h_conv3_shape[3])
 		h_conv3_flat = tf.reshape(h_conv3,[-1,3136])
 		h_fc1 = tf.nn.relu(tf.matmul(h_conv3_flat,W_fc1) + b_fc1)
 
@@ -152,7 +152,7 @@ class BrainDQN:
 		else:
 			state = "train"
 		if self.timeStep % 10000 == 0:
-			print "TIMESTEP", self.timeStep, "/ STATE", state, "/ EPSILON", self.epsilon
+			print("TIMESTEP", self.timeStep, "/ STATE", state, "/ EPSILON", self.epsilon)
 
 		self.currentState = newState
 		self.timeStep += 1

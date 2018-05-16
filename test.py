@@ -1,5 +1,12 @@
+import random
+import cv
+import sys
+from BrainDQN_Nature import *
+import numpy as np 
+
 import gym
-env = gym.make('NameThisGame-v0')
+
+env = gym.make('SpaceInvaders-v0')
 env.reset()
 for _ in range(1000):
     env.render()
