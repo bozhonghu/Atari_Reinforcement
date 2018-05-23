@@ -30,7 +30,8 @@ class BrainDQN:
     self.epsilon = INITIAL_EPSILON
     self.actions = actions
 
-    self.restricted_actions = []
+    # initialize with no restricted actions.
+    self.restricted_actions = [1] * len(actions)
     # init Q network
     self.stateInput,self.QValue,self.W_conv1,self.b_conv1,self.W_conv2,self.b_conv2,self.W_conv3,self.b_conv3,self.W_fc1,self.b_fc1,self.W_fc2,self.b_fc2 = self.createQNetwork()
 
