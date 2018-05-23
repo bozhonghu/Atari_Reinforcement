@@ -31,7 +31,7 @@ class BrainDQN:
     self.actions = actions
 
     # initialize with no restricted actions.
-    self.restricted_actions = [1] * len(actions)
+    self.restricted_actions = [1] * actions
     # init Q network
     self.stateInput,self.QValue,self.W_conv1,self.b_conv1,self.W_conv2,self.b_conv2,self.W_conv3,self.b_conv3,self.W_fc1,self.b_fc1,self.W_fc2,self.b_fc2 = self.createQNetwork()
 
@@ -167,9 +167,9 @@ class BrainDQN:
     action = np.zeros(self.actions)
     action_index = 0
     action_set = []
-    for i in range(self.action):
+    for i in range(self.actions):
       if self.restricted_actions[i]:
-        action_set.append[i]
+        action_set.append(i)
       else:
         QValue[i] = 0
     if self.timeStep % FRAME_PER_ACTION == 0:

@@ -1,3 +1,9 @@
+import random
+import cv2
+import sys
+from BrainDQN_Nature import *
+import numpy as np 
+
 def preprocessBarrierFindPossibleRowsCols(observation):
     '''
     Given the START observation, returns which rows/cols have barriers. 
@@ -19,8 +25,8 @@ def preprocessBarrierFindPossibleRowsCols(observation):
                 col_with_barrier.add(col)
                 
                 
-    print 'row_with_barrier', row_with_barrier
-    print 'col_with_barrier', col_with_barrier
+    # print 'row_with_barrier', row_with_barrier
+    # print 'col_with_barrier', col_with_barrier
     
 def preprocessBarrierCols(observation):
     '''
@@ -65,4 +71,26 @@ def canHitBarrier(observation):
     
     return tip in cols
 
+# Takes the original image as input.
+def is_bullet(im, side):
+    left = min(np.unique(np.nonzero(np.array(np.squeeze(im))[194])[0]))
+    right = left + 6
+    if side == 0:
+        im = im[160:180,left-5:left]
+    else:
+        im = im[160:180,right:right+5]
+    lower_blue = np.array([120,120,120])
+    upper_blue = np.array([150,150,150])
+    mask = cv2.inRange(im, lower_blue, upper_blue)
+    res = cv2.bitwise_and(im,im, mask = mask)
+    if len(np.nonzero(res)[0]) > 0:
+        return True
+    else:
+        return False
+
+def preprocess(observation):
+    observation = cv2.cvtColor(cv2.resize(observation, (84, 110)), cv2.COLOR_BGR2GRAY)
+    observation = observation[26:110,:]
+    ret, observation = cv2.threshold(observation,1,255,cv2.THRESH_BINARY)
+    return np.reshape(observation,(84,84,1))
     
