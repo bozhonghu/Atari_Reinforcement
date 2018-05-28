@@ -12,7 +12,7 @@ import pickle
 
 FIVE_HRS_TO_SEC = 18000
 FIVE_MIN_TO_SEC = 300
-TIME_TO_TRAIN = FIVE_HRS_TO_SEC
+TIME_TO_TRAIN = FIVE_HRS_TO_SEC*2
 
 lefts = [1, 4]
 rights = [2, 5]
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     print 'trained for ' + str(TIME_TO_TRAIN) + 'secs, ' + str(iters) + ' iters (games played)..'
 
     # Now, play the game with the trained network and see how it performs
-    brain.epsilon = 0.2 #  Must do this or else brain might keep performing random actions 
+    brain.epsilon = 0.2 #  Must do this or else brain might keep performing random actions
 
     env.reset()
     games = 0
