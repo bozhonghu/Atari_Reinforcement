@@ -9,9 +9,11 @@ import gym
 from utils import *
 
 
+TWO_DAY_TO_SEC = 172800
 FIVE_HRS_TO_SEC = 18000
 FIVE_MIN_TO_SEC = 300
-TIME_TO_TRAIN = FIVE_HRS_TO_SEC*2
+
+TIME_TO_TRAIN = TWO_DAY_TO_SEC
 
 lefts = [1, 4]
 rights = [2, 5]
