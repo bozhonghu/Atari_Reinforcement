@@ -60,6 +60,11 @@ if __name__ == '__main__':
         if (is_bullet(nextObservation, 1)):
             for i in rights:
                 restricted[i] = 0
+        # uncomment this if you want the ship not to be able to stay still
+        # if there is a bullet straight above it. The problem is that it will
+        # not be able to detect whether it is own bullet or enemy bullet.
+        # if (is_bullet(nextObservation, 2)):
+        #         restricted[0] = 0
         if (canHitBarrier(nextObservation)):
             for i in shoots:
                 restricted[i] = 0

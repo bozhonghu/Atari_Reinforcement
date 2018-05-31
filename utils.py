@@ -75,18 +75,29 @@ def canHitBarrier(observation):
 def is_bullet(im, side):
     left = min(np.unique(np.nonzero(np.array(np.squeeze(im))[194])[0]))
     right = left + 6
+    # Left
     if side == 0:
         im = im[160:190,left-5:left]
-    else:
+    # Right
+    elif side == 1:
         im = im[160:190,right:right+5]
-    lower_blue = np.array([120,120,120])
-    upper_blue = np.array([150,150,150])
-    mask = cv2.inRange(im, lower_blue, upper_blue)
-    res = cv2.bitwise_and(im,im, mask = mask)
-    if len(np.nonzero(res)[0]) > 0:
-        return True
+    # Center
     else:
-        return False
+        im = im[160:190,left+1:right-1]
+    # lower_blue = np.array([120,120,120])
+    # upper_blue = np.array([150,150,150])
+    # mask = cv2.inRange(im, lower_blue, upper_blue)
+    # res = cv2.bitwise_and(im,im, mask = mask)
+    # if len(np.nonzero(res)[0]) > 0:
+    #     print(im)
+    #     return True
+    # else:
+    #     return False
+    for i in range(len(im)):
+        for j in range(len(im[i])):
+            if (im[i][j][0] == 142):
+                return True
+    return False
 
 def preprocess(observation):
     observation = cv2.cvtColor(cv2.resize(observation, (84, 110)), cv2.COLOR_BGR2GRAY)
