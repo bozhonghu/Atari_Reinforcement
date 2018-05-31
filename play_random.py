@@ -19,12 +19,17 @@ if __name__ == '__main__':
     NUM_GAMES = 100
 
     while True:
+        env.render()
         action = env.action_space.sample() # take a random action
         observation, reward, done, info = env.step(action)
+
+        print reward
+
 
         sum_score += reward
 
         if done:
+            time.sleep(2)
             env.reset()
             games += 1
             print 'test games: ' + str(games)
