@@ -7,7 +7,6 @@
 import tensorflow as tf
 import numpy as np
 import random
-import os
 from collections import deque
 
 # Hyper Parameters:
@@ -15,9 +14,9 @@ FRAME_PER_ACTION = 1
 GAMMA = 0.95 # decay rate of past observations
 OBSERVE = 50000. # timesteps to observe before training
 EXPLORE = 500000. # frames over which to anneal epsilon
-FINAL_EPSILON = 0.1#0.001 # final value of epsilon
+FINAL_EPSILON = 0.001#0.001 # final value of epsilon
 INITIAL_EPSILON = 1.0#0.01 # starting value of epsilon
-REPLAY_MEMORY = 40000 # number of previous transitions to remember
+REPLAY_MEMORY = 150000 # number of previous transitions to remember
 BATCH_SIZE = 32 # size of minibatch
 UPDATE_TIME = 10000
 
@@ -54,8 +53,6 @@ class BrainDQN:
         print("Successfully loaded:", checkpoint.model_checkpoint_path)
     else:
         print("Could not find old network weights")
-
-    self.observe_states = []
 
 
   def createQNetwork(self):
@@ -141,13 +138,6 @@ class BrainDQN:
       self.copyTargetQNetwork()
 
 
-  def get_avg_max_Q(self, states):
-    avg = 0
-    for i in range(len(states)):
-      QValue = self.QValue.eval(feed_dict= {self.stateInput:[states[i]]})[0]
-      avg += max(QValue)
-    return avg / len(states)
-
   def setPerception(self,nextObservation,action,reward,terminal, restricted):
     newState = np.append(nextObservation,self.currentState[:,:,1:],axis = 2)
     self.replayMemory.append((self.currentState,action,reward,newState,terminal))
@@ -161,9 +151,6 @@ class BrainDQN:
     state = ""
     if self.timeStep <= OBSERVE:
       state = "observe"
-      if self.timeStep % 1000 == 0:
-        # Add to fixed states
-        self.observe_states.append(newState)
     elif self.timeStep > OBSERVE and self.timeStep <= OBSERVE + EXPLORE:
       state = "explore"
     else:
@@ -174,8 +161,6 @@ class BrainDQN:
     self.currentState = newState
     self.timeStep += 1
     self.restricted_actions = restricted
-
-
 
   def getAction(self):
     QValue = self.QValue.eval(feed_dict= {self.stateInput:[self.currentState]})[0]
@@ -200,22 +185,6 @@ class BrainDQN:
     # change episilon
     if self.epsilon > FINAL_EPSILON and self.timeStep > OBSERVE:
       self.epsilon -= (INITIAL_EPSILON - FINAL_EPSILON)/EXPLORE
-   
-
-
-    # Every 5k steps, record the average predicted q value. Start after 50k Steps.
-    if self.timeStep > 50000 and self.timeStep % 5000 == 0:
-      avg_max_Q = self.get_avg_max_Q(self.observe_states)
-      print("Average max Q value for observe states was: " + str(avg_max_Q))
-      filename = "./qvalues/augmented_q_values.txt"
-      if os.path.exists(filename):
-          append_write = 'a' # append if already exists
-      else:
-          append_write = 'w' # make a new file if not
-      highscore = open(filename,append_write)
-      highscore.write(str(avg_max_Q) + '\n')
-      highscore.close()
-
 
     return action
 
