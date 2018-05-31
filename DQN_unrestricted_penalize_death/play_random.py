@@ -9,6 +9,7 @@ import gym
 from utils import *
 
 
+
 if __name__ == '__main__':
 
     env = gym.make('SpaceInvaders-v0')
@@ -23,8 +24,7 @@ if __name__ == '__main__':
         action = env.action_space.sample() # take a random action
         observation, reward, done, info = env.step(action)
 
-        print reward
-
+        print preprocessDetermineOneOrTwo(observation)
 
         sum_score += reward
 
