@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
 
 
-    print 'trained for ' + str(TIME_TO_TRAIN) + 'secs, ' + str(iters) + ' iters (games played)..'
+    print('trained for ' + str(TIME_TO_TRAIN) + 'secs, ' + str(iters) + ' iters (games played)..')
 
     # Now, play the game with the trained network and see how it performs
     brain.epsilon = 0.2 #  Must do this or else brain might keep performing random actions
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         if terminal:
             nextObservation = env.reset()
             games += 1
-            print 'test games: ' + str(games)
+            print('test games: ' + str(games))
 
         if games == NUM_GAMES:
             break
@@ -100,5 +100,5 @@ if __name__ == '__main__':
         brain.setPerception(nextObservation,action,reward,terminal, restricted)
 
 
-    print 'Restricted avg score: ' + str(sum_score / float(games))
-    print 'out of ' + str(NUM_GAMES) + ' games '
+    print('Restricted avg score: ' + str(sum_score / float(games)))
+    print('out of ' + str(NUM_GAMES) + ' games ')
