@@ -3,6 +3,7 @@ import cv2
 import sys
 from BrainDQN_Nature import *
 import numpy as np
+import time
 
 def preprocessBarrierFindPossibleRowsCols(observation):
     '''
@@ -79,15 +80,20 @@ def is_bullet(im, side):
         im = im[160:190,left-5:left]
     else:
         im = im[160:190,right:right+5]
-    lower_blue = np.array([120,120,120])
-    upper_blue = np.array([150,150,150])
-    mask = cv2.inRange(im, lower_blue, upper_blue)
-    res = cv2.bitwise_and(im,im, mask = mask)
-    if len(np.nonzero(res)[0]) > 0:
-        return True
-    else:
-        return False
-
+    # lower_blue = np.array([120,120,120])
+    # upper_blue = np.array([150,150,150])
+    # mask = cv2.inRange(im, lower_blue, upper_blue)
+    # res = cv2.bitwise_and(im,im, mask = mask)
+    # if len(np.nonzero(res)[0]) > 0:
+    #     print(im)
+    #     return True
+    # else:
+    #     return False
+    for i in range(len(im)):
+        for j in range(len(im[i])):
+            if (im[i][j][0] == 142):
+                return True
+    return False
 def preprocess(observation):
     observation = cv2.cvtColor(cv2.resize(observation, (84, 110)), cv2.COLOR_BGR2GRAY)
     observation = observation[26:110,:]
