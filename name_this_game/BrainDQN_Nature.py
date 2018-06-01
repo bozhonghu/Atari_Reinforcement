@@ -194,7 +194,7 @@ class BrainDQN:
 		if self.timeStep > 50000 and self.timeStep % 5000 == 0:
 			avg_max_Q = self.get_avg_max_Q(self.observe_states)
 			print("Average max Q value for observe states was: " + str(avg_max_Q))
-			filename = "./qvalues/augmented_q_values.txt"
+			filename = "./qvalues/not_augmented_q_values.txt"
 			if os.path.exists(filename):
 			    append_write = 'a' # append if already exists
 			else:

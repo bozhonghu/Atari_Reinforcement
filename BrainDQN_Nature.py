@@ -13,8 +13,8 @@ from collections import deque
 FRAME_PER_ACTION = 1
 GAMMA = 0.95 # decay rate of past observations
 OBSERVE = 50000. # timesteps to observe before training
-EXPLORE = 1000000. # frames over which to anneal epsilon
-FINAL_EPSILON = 0.1#0.001 # final value of epsilon
+EXPLORE = 500000. # frames over which to anneal epsilon
+FINAL_EPSILON = 0.01#0.001 # final value of epsilon
 INITIAL_EPSILON = 1.0#0.01 # starting value of epsilon
 REPLAY_MEMORY = 40000 # number of previous transitions to remember
 BATCH_SIZE = 32 # size of minibatch
