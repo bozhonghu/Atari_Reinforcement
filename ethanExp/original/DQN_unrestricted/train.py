@@ -38,6 +38,8 @@ reward_file = open('reward_per_game.txt', 'w')
 
 if __name__ == '__main__':
 
+    print('train DQN restricted original ')
+
     # Initialize game
     env = gym.make('SpaceInvaders-v0')
     env.seed(10)
