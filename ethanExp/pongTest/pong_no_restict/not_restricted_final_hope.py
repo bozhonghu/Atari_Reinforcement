@@ -25,6 +25,7 @@ import matplotlib.pyplot as plt
 
 TIMESTEPS_TO_TRAIN = 2000000 # 2mil
 
+# TIMESTEPS_TO_TRAIN = 60000 # 60k
 
 lefts = [1, 4]
 rights = [2, 5]
@@ -36,8 +37,6 @@ reward_file = open('reward_per_game.txt', 'w')
 
 
 if __name__ == '__main__':
-
-    print('trainig for ', TIMESTEPS_TO_TRAIN, 'motherfuckni timestpes')
 
     # Initialize game
     env = gym.make('SpaceInvaders-v0')
@@ -77,8 +76,8 @@ if __name__ == '__main__':
             iters += 1
             nextObservation = env.reset()
             reward_over_time.append((cur_score, brain.timeStep))
-            reward_file.write(str(cur_score) + str(brain.timeStep) + '\n')
-            print (cur_score, brain.timeStep)
+            reward_file.write(str(cur_score) +" , " + str(brain.timeStep) + '\n')
+            # print (cur_score, brain.timeStep)
             cur_score = 0
 
 
@@ -100,17 +99,17 @@ if __name__ == '__main__':
         # penalize for getting shot
 
         if gotShot:
-            reward -= 40
+            reward -= 5
 
         brain.setPerception(nextObservation,action,reward,terminal, restricted)
 
     print ('trained for ' + str(time.clock() - start_time) + 'secs, ' + str(iters) + ' iters (games played)..')
 
-    tot_score = [x[0] for x in reward_over_time]
-    timestep = [x[1] for x in reward_over_time]
-    print( 'total score vs timestep')
-    plt.plot(timestep,tot_score)
-    plt.show()
+    # tot_score = [x[0] for x in reward_over_time]
+    # timestep = [x[1] for x in reward_over_time]
+    # print( 'total score vs timestep')
+    # plt.plot(timestep,tot_score)
+    # plt.show()
 
     reward_file.close()
 
@@ -134,7 +133,7 @@ if __name__ == '__main__':
         if terminal:
             nextObservation = env.reset()
             games += 1
-            print 'test games: ' + str(games)
+            print ('test games: ' + str(games))
 
         if games == NUM_GAMES:
             break

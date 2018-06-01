@@ -1,18 +1,18 @@
 import random
 import cv2
 import sys
-from BrainDQN_Nature import *
+# from BrainDQN_Nature import *
 import numpy as np
 import time
 
 import gym
-from utils import *
+# from utils import *
 
 
 
 if __name__ == '__main__':
 
-    env = gym.make('Pong-v00')
+    env = gym.make('Pong-v0')
     env.reset()
 
     games = 0
@@ -24,7 +24,10 @@ if __name__ == '__main__':
         action = env.action_space.sample() # take a random action
         observation, reward, done, info = env.step(action)
 
-        print preprocessDetermineOneOrTwo(observation)
+
+        if reward != 0:
+            print reward
+            time.sleep(1)
 
         sum_score += reward
 

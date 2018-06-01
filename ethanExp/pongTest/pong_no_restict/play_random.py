@@ -12,7 +12,7 @@ from utils import *
 
 if __name__ == '__main__':
 
-    env = gym.make('Pong-v00')
+    env = gym.make('SpaceInvaders-v0')
     env.reset()
 
     games = 0
